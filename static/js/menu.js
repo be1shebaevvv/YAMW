@@ -1,16 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
   const mainPhotos = [
     {
-      src: '/media/beatiful/photo_5222196670618078826_y.jpg',
+      src: 'media/beatiful/photo_5222196670618078826_y.jpg',
       related: [
-        "/media/beatiful/photo_5222082398718201252_y.jpg",
-        "/media/beatiful/photo_5222082398718201262_y.jpg",
-        "/media/beatiful/photo_5222082398718201263_y.jpg",
-        "/media/beatiful/photo_5222196670618078820_y.jpg",
-        "/media/beatiful/photo_5222196670618078825_y.jpg",
-        "/media/beatiful/photo_5222196670618078826_y.jpg",
-        "/media/beatiful/photo_5222196670618078834_y.jpg",
-        "/media/fotbol/photo_5222082398718201271_y.jpg",
+        "media/beatiful/photo_5222082398718201252_y.jpg",
+        "media/beatiful/photo_5222082398718201262_y.jpg",
+        "media/beatiful/photo_5222082398718201263_y.jpg",
+        "media/beatiful/photo_5222196670618078820_y.jpg",
+        "media/beatiful/photo_5222196670618078825_y.jpg",
+        "media/beatiful/photo_5222196670618078826_y.jpg",
+        "media/beatiful/photo_5222196670618078834_y.jpg",
+        "media/fotbol/photo_5222082398718201271_y.jpg",
       ],
       desc: `
       Не знаю, в чём прикол,  
@@ -20,16 +20,16 @@ document.addEventListener('DOMContentLoaded', () => {
       `
     },
     {
-      src: "/media/estetik/photo_5222196670618078820_y.jpg",
+      src: "media/estetik/photo_5222196670618078820_y.jpg",
       related: [
-        "/media/estetik/photo_5222082398718201272_y.jpg",
-        "/media/estetik/photo_5222082398718201273_y.jpg",
-        "/media/estetik/photo_5222082398718201280_y.jpg",
-        "/media/estetik/photo_5222196670618078820_y.jpg",
-        "/media/estetik/photo_5222196670618078821_y.jpg",
-        "/media/estetik/photo_5222196670618078827_y.jpg",
-        "/media/estetik/photo_5222196670618078828_y.jpg",
-        "/media/estetik/photo_5222196670618078834_y.jpg",
+        "media/estetik/photo_5222082398718201272_y.jpg",
+        "media/estetik/photo_5222082398718201273_y.jpg",
+        "media/estetik/photo_5222082398718201280_y.jpg",
+        "media/estetik/photo_5222196670618078820_y.jpg",
+        "media/estetik/photo_5222196670618078821_y.jpg",
+        "media/estetik/photo_5222196670618078827_y.jpg",
+        "media/estetik/photo_5222196670618078828_y.jpg",
+        "media/estetik/photo_5222196670618078834_y.jpg",
       ],
       desc: `
       Эти фото просто поражают своей эстетикой.  
@@ -39,29 +39,29 @@ document.addEventListener('DOMContentLoaded', () => {
       `
     },
     {
-      src: "/media/fotbol/photo_5222082398718201257_y.jpg",
+      src: "media/fotbol/photo_5222082398718201257_y.jpg",
       related: [
-          "/media/fotbol/photo_5222082398718201252_y.jpg",
-          "/media/fotbol/photo_5222082398718201253_y.jpg",
-          "/media/fotbol/photo_5222082398718201254_y.jpg",
-          "/media/fotbol/photo_5222082398718201256_y.jpg",
-          "/media/fotbol/photo_5222082398718201257_y.jpg",
-          "/media/fotbol/photo_5222082398718201258_y.jpg",
-          "/media/fotbol/photo_5222082398718201259_y.jpg",
-          "/media/fotbol/photo_5222082398718201260_y.jpg",
-          "/media/fotbol/photo_5222082398718201262_y.jpg",
-          "/media/fotbol/photo_5222082398718201263_y.jpg",
-          "/media/fotbol/photo_5222082398718201265_y.jpg",
-          "/media/fotbol/photo_5222082398718201268_y.jpg",
-          "/media/fotbol/photo_5222082398718201269_y.jpg",
-          "/media/fotbol/photo_5222082398718201270_y.jpg",
-          "/media/fotbol/photo_5222082398718201271_y.jpg",
-          "/media/fotbol/photo_5222082398718201274_y.jpg",
-          "/media/fotbol/photo_5222082398718201275_y.jpg",
-          "/media/fotbol/photo_5222082398718201276_y.jpg",
-          "/media/fotbol/photo_5222082398718201278_y.jpg",
-          "/media/fotbol/photo_5222082398718201281_y.jpg",
-          "/media/fotbol/photo_5222082398718201283_y.jpg",
+          "media/fotbol/photo_5222082398718201252_y.jpg",
+          "media/fotbol/photo_5222082398718201253_y.jpg",
+          "media/fotbol/photo_5222082398718201254_y.jpg",
+          "media/fotbol/photo_5222082398718201256_y.jpg",
+          "media/fotbol/photo_5222082398718201257_y.jpg",
+          "media/fotbol/photo_5222082398718201258_y.jpg",
+          "media/fotbol/photo_5222082398718201259_y.jpg",
+          "media/fotbol/photo_5222082398718201260_y.jpg",
+          "media/fotbol/photo_5222082398718201262_y.jpg",
+          "media/fotbol/photo_5222082398718201263_y.jpg",
+          "media/fotbol/photo_5222082398718201265_y.jpg",
+          "media/fotbol/photo_5222082398718201268_y.jpg",
+          "media/fotbol/photo_5222082398718201269_y.jpg",
+          "media/fotbol/photo_5222082398718201270_y.jpg",
+          "media/fotbol/photo_5222082398718201271_y.jpg",
+          "media/fotbol/photo_5222082398718201274_y.jpg",
+          "media/fotbol/photo_5222082398718201275_y.jpg",
+          "media/fotbol/photo_5222082398718201276_y.jpg",
+          "media/fotbol/photo_5222082398718201278_y.jpg",
+          "media/fotbol/photo_5222082398718201281_y.jpg",
+          "media/fotbol/photo_5222082398718201283_y.jpg",
       ],
       desc: `
       Ты в полном азартe, наблюдая за игрой. ⚽  
@@ -70,20 +70,20 @@ document.addEventListener('DOMContentLoaded', () => {
       `
     },
     {
-      src: "/media/kafe/photo_5222196670618078825_y.jpg",
+      src: "media/kafe/photo_5222196670618078825_y.jpg",
       related: [
-          "/media/kafe/photo_5222196670618078822_y.jpg",
-          "/media/kafe/photo_5222196670618078825_y.jpg",
-          "/media/kafe/photo_5222196670618078826_y.jpg",
+          "media/kafe/photo_5222196670618078822_y.jpg",
+          "media/kafe/photo_5222196670618078825_y.jpg",
+          "media/kafe/photo_5222196670618078826_y.jpg",
       ],
       desc: 'Красота, комфорт и настроение в каждом снимке'
     },
     {
-      src: "/media/kol/photo_5222196670618078827_y.jpg",
+      src: "media/kol/photo_5222196670618078827_y.jpg",
       related: [
-          "/media/kol/photo_5222196670618078827_y.jpg",
-          "/media/kol/photo_5222196670618078831_y.jpg",
-          "/media/kol/photo_5222196670618078833_y.jpg",
+          "media/kol/photo_5222196670618078827_y.jpg",
+          "media/kol/photo_5222196670618078831_y.jpg",
+          "media/kol/photo_5222196670618078833_y.jpg",
       ],
       desc: `
       Природа Ысык-Куля и твоя грация создают невероятную гармонию. 🌊⛰️    
@@ -91,18 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
       `
     },
     {
-      src: "/media/mountains/photo_5222196670618078834_y.jpg",
+      src: "media/mountains/photo_5222196670618078834_y.jpg",
       related: [
-          "/media/mountains/photo_5222196670618078828_y.jpg",
-          "/media/mountains/photo_5222196670618078829_y.jpg",
-          "/media/mountains/photo_5222196670618078830_y.jpg",
-          "/media/mountains/photo_5222196670618078834_y.jpg",
+          "media/mountains/photo_5222196670618078828_y.jpg",
+          "media/mountains/photo_5222196670618078829_y.jpg",
+          "media/mountains/photo_5222196670618078830_y.jpg",
+          "media/mountains/photo_5222196670618078834_y.jpg",
       ],
       desc: `
       Кажется, что время замерло на этих кадрах.  
       Просто восхитительно! 💫
       `
-
     },
   ];
 
