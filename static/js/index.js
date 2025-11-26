@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             img.remove();
             activePhotos.delete(photoSrc);
             createFlyingPhoto();
-        }, 10000);
+        }, 20000);
     }
 
     // запуск первых фото
