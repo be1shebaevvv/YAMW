@@ -9,7 +9,7 @@ body{
     min-height:100vh;
 }
 
-/* ВЕРХ */
+/* ========== ШАПКА ========== */
 .topbar{
     position:sticky;
     top:0;
@@ -20,7 +20,7 @@ body{
     justify-content:space-between;
     align-items:center;
     border-bottom:1px solid #f1f1f1;
-    z-index:10;
+    z-index:1000;
 }
 .logo{
     font-size:1.5rem;
@@ -31,9 +31,7 @@ body{
 }
 .logo:hover{color:#ff1762;}
 
-.btn-group{
-    display:flex;gap:8px;
-}
+.btn-group{display:flex;gap:8px;}
 .smile-btn{
     background:#ff4c83;
     color:#fff; border:none;
@@ -45,7 +43,7 @@ body{
 }
 .smile-btn:hover{background:#ff2366;transform:translateY(-1px);}
 
-/* ЦЕНТР */
+/* ========== ГЛАВНАЯ ========== */
 .main{flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;}
 
 .hero{
@@ -59,7 +57,7 @@ body{
 .hero h2{color:#ff4c83;margin-bottom:6px;font-size:2rem;}
 .hero p{color:#666;font-size:1rem;}
 
-/* ========== ФОТО-СТРАНИЦА ========== */
+/* ========== ГАЛЕРЕЯ ========== */
 .gallery{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:26px;}
 
 .main-area{
@@ -68,14 +66,13 @@ body{
     gap:25px;
 }
 
-/* 2 — большое фото */
+/* Большое фото */
 .folder-big{
     background:#fff;
     border-radius:14px;
     box-shadow:0 6px 20px #0002;
     overflow:hidden;
-    display:flex;justify-content:center;
-    align-items:center;
+    display:flex;justify-content:center;align-items:center;
 }
 .folder-big img{
     width:100%;height:auto;
@@ -83,11 +80,10 @@ body{
     object-fit:contain;
 }
 
-/* 1 — миниатюры сверху */
+/* Миниатюры №1 */
 .folder-thumbs{
     display:flex;gap:10px;
-    flex-wrap:wrap;
-    justify-content:center;
+    flex-wrap:wrap;justify-content:center;
 }
 .thumb{
     width:120px;height:120px;
@@ -99,22 +95,21 @@ body{
 }
 .thumb:hover{transform:scale(1.05);}
 
-/* 3 — связанные */
+/* Связанные №3 */
 .folder-related{
     display:flex;flex-wrap:wrap;
     gap:10px;justify-content:center;
 }
 .thumb-related{
     width:110px;height:110px;
-    object-fit:cover;
-    border-radius:10px;
+    object-fit:cover;border-radius:10px;
     cursor:pointer;
     box-shadow:0 4px 16px #0003;
     transition:.2s;
 }
 .thumb-related:hover{transform:scale(1.07);}
 
-/* 4 — описание */
+/* Описание №4 */
 .photo-description-box{
     background:white;
     padding:20px;
@@ -124,24 +119,42 @@ body{
 .photo-description-box h3{color:#ff4c83;margin-bottom:6px;font-size:18px;}
 .photo-description-box p{font-size:15px;color:#555;line-height:1.45;}
 
-
-/* ==================== 📱 ТЕЛЕФОН (АКТИВИРУЮ СХЕМУ #1) ==================== */
+/* ========== 📱 МОБИЛЬНЫЙ РЕЖИМ — КАК ТЫ ПРОСИЛ ========== */
 @media(max-width:700px){
 
+    /* кнопки больше НЕ перекрывают фото */
+    .topbar{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:8px;
+        padding:8px 14px;
+    }
+    .btn-group{
+        width:100%;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:6px;
+    }
+    .smile-btn{
+        font-size:13px;
+        padding:6px 10px;
+    }
+    .logo{font-size:1.25rem;margin-bottom:2px;}
+
+    /* фото-блоки */
     .main-area{
-        display:grid;
         grid-template-columns:1fr;
-        grid-template-rows:auto auto auto auto; /* порядок как ты просил */
-        gap:15px;
+        grid-template-rows:auto auto auto auto;
+        gap:14px;
     }
 
-    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px; }
+    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px;}
     .thumb{width:90px;height:90px;flex:0 0 auto;}
 
     .folder-big{ order:2; }
-
     .photo-description-box{ order:3; }
 
-    .folder-related{ order:4; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px; }
+    .folder-related{ order:4; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px;}
     .thumb-related{width:90px;height:90px;flex:0 0 auto;}
 }
