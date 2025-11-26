@@ -18,14 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Подключаем Lightbox CSS и JS
+  // Подключаем Lightbox
   Promise.all([
     loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css', 'css'),
     loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js')
   ]).then(() => {
-    console.log('CDN Lightbox загружен');
 
-      const mainPhotos = [
+    // --- Твои DOM элементы ---
+    const appRoot = document.getElementById('app-root');
+    const welcome = document.getElementById('welcome');
+    const smileBtn = document.getElementById('smileBtn');
+
+    // --- Массив фотографий ---
+          const mainPhotos = [
       {
         src: 'media/beatiful/photo_5222196670618078826_y.jpg',
         related: [
@@ -129,27 +134,12 @@ document.addEventListener('DOMContentLoaded', () => {
         Просто восхитительно! 💫
         `
       }
-    ];
-
-    // --- Создаем базовые элементы ---
-    const appRoot = document.getElementById('app-root') || document.createElement('div');
-    appRoot.id = 'app-root';
-    if (!document.getElementById('app-root')) document.body.appendChild(appRoot);
-
-    const welcome = document.createElement('div');
-    welcome.id = 'welcome';
-    welcome.innerHTML = `
-      Добро пожаловать!<br>
-      <button id="smileBtn">Открыть галерею</button>
-    `;
-    appRoot.appendChild(welcome);
-
-    const smileBtn = document.getElementById('smileBtn');
+    ]
 
     // --- Вспомогательные функции ---
     function clearGallery() { 
-      const existingGallery = document.querySelector('.view');
-      if (existingGallery) existingGallery.remove(); 
+      const existing = document.querySelector('.view');
+      if (existing) existing.remove(); 
     }
 
     function createEl(tag, cls = '', parent = null) {
@@ -159,11 +149,19 @@ document.addEventListener('DOMContentLoaded', () => {
       return el;
     }
 
-    // --- Галерея ---
-    function openGallery(startIndex = 0) {
-      clearGallery(); // очищаем только галерею, не welcome
+    function enableSwipe(img, onNext, onPrev) {
+      let startX = 0;
+      img.addEventListener('touchstart', e => (startX = e.touches[0].clientX), { passive: true });
+      img.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) (dx < 0 ? onNext() : onPrev());
+      }, { passive: true });
+    }
 
-      welcome.style.display = 'none'; // скрываем welcome
+    // --- Функция открытия галереи ---
+    function openGallery(startIndex = 0) {
+      clearGallery();
+      welcome.style.display = 'none';
 
       const view = createEl('div', 'view', appRoot);
       const gallery = createEl('div', 'gallery', view);
@@ -171,14 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const backBtn = createEl('button', 'back-btn', gallery);
       backBtn.textContent = '← Назад';
       backBtn.addEventListener('click', () => {
-        view.remove(); // удаляем галерею
-        welcome.style.display = 'block'; // показываем welcome
+        view.remove();
+        welcome.style.display = 'block';
       });
 
       const mainArea = createEl('div', 'main-area', gallery);
       const bigWrap = createEl('div', 'folder-big', mainArea);
       const bigImg = createEl('img', '', bigWrap);
       bigImg.setAttribute('data-lightbox', 'gallery');
+
       const relatedWrap = createEl('div', 'folder-related', mainArea);
       const descBox = createEl('div', 'photo-description-box', mainArea);
       const descTitle = createEl('h3', '', descBox);
@@ -198,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         photo.related.forEach(src => {
           const thumb = createEl('img', 'thumb-related', relatedWrap);
           thumb.src = src;
-          thumb.addEventListener('click', () => (bigImg.src = src));
+          thumb.addEventListener('click', () => bigImg.src = src);
         });
       }
 
@@ -213,27 +212,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // Предзагрузка фото
       mainPhotos.forEach(ph => {
         new Image().src = ph.src;
-        ph.related.forEach(r => (new Image().src = r));
+        ph.related.forEach(r => new Image().src = r);
       });
 
       showPhoto(currentIndex);
     }
 
-    function enableSwipe(img, onNext, onPrev) {
-      let startX = 0;
-      img.addEventListener('touchstart', e => (startX = e.touches[0].clientX), { passive: true });
-      img.addEventListener(
-        'touchend',
-        e => {
-          const dx = e.changedTouches[0].clientX - startX;
-          if (Math.abs(dx) > 50) (dx < 0 ? onNext() : onPrev());
-        },
-        { passive: true }
-      );
-    }
-
+    // --- Событие кнопки ---
     smileBtn.addEventListener('click', () => openGallery(0));
 
   }).catch(err => console.error('Ошибка загрузки CDN:', err));
-
 });
