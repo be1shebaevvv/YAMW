@@ -38,21 +38,20 @@ document.addEventListener("DOMContentLoaded", () => {
         "media/general/photo_5222196670618078834_y.jpg"
     ];
 
-    // создаём контейнер для фото, если его нет
-    let container = document.querySelector(".photo-container");
-    if (!container) {
-        container = document.createElement("div");
-        container.classList.add("photo-container");
-        document.body.appendChild(container);
-    }
+
+    const container = document.createElement("div");
+    container.classList.add("photo-container");
+    document.body.appendChild(container);
 
     const maxPhotos = 10;
     let activePhotos = new Set();
 
+    // возвращает случайное фото, которого нет на экране
     function getRandomUniquePhoto() {
         const available = photos.filter(p => !activePhotos.has(p));
         if (available.length === 0) return null;
-        return available[Math.floor(Math.random() * available.length)];
+        const randomIndex = Math.floor(Math.random() * available.length);
+        return available[randomIndex];
     }
 
     function createFlyingPhoto() {
@@ -64,17 +63,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const img = document.createElement("img");
         img.src = photoSrc;
         img.classList.add("photo");
-        img.style.position = "absolute";
 
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
-        const margin = 100;
 
-        const startX = margin + Math.random() * (viewportWidth - margin * 2);
-        const startY = margin + Math.random() * (viewportHeight - margin * 2);
+        const margin = 300;
+        const startX = margin + Math.random() * (viewportWidth - 300 - margin * 2);
+        const startY = margin + Math.random() * (viewportHeight - 300 - margin * 2);
 
         img.style.left = `${startX}px`;
         img.style.top = `${startY}px`;
+        img.style.opacity = "1";
 
         container.appendChild(img);
 
@@ -90,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
             y += dy;
             rotation += 0.3;
 
-            if (x <= 0 || x >= viewportWidth - 150) dx *= -1;
-            if (y <= 0 || y >= viewportHeight - 150) dy *= -1;
+            if (x <= 0 || x >= viewportWidth - 300) dx *= -1;
+            if (y <= 0 || y >= viewportHeight - 300) dy *= -1;
 
             img.style.left = `${x}px`;
             img.style.top = `${y}px`;
@@ -102,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         move();
 
+        // удалить фото через 20 секунд и заменить новым
         setTimeout(() => {
             img.remove();
             activePhotos.delete(photoSrc);
@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 10000);
     }
 
+    // запуск первых фото
     for (let i = 0; i < maxPhotos; i++) {
         setTimeout(createFlyingPhoto, i * 1000);
     }
@@ -117,12 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
-        heart.style.position = "fixed";
         heart.style.left = Math.random() * 100 + "vw";
         heart.style.animationDuration = (6 + Math.random() * 4) + "s";
         heart.style.opacity = Math.random();
         heart.style.transform = `scale(${0.8 + Math.random() * 0.6}) rotate(45deg)`;
-        heart.textContent = "💖";
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 10000);
     }
