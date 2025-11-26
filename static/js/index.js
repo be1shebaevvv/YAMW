@@ -38,95 +38,66 @@ document.addEventListener("DOMContentLoaded", () => {
         "media/general/photo_5222196670618078834_y.jpg"
     ];
 
-    const container = document.createElement("div");
-    container.classList.add("photo-container");
-    document.body.appendChild(container);
+  const appRoot = document.getElementById('app-root');
+  const smileBtn = document.getElementById('smileBtn');
+  const welcome = document.getElementById('welcome');
 
-    const maxPhotos = 5;
-    let activePhotos = new Set();
+  smileBtn.addEventListener('click', () => openGallery(0));
 
-    function getRandomUniquePhoto() {
-        const available = photos.filter(p => !activePhotos.has(p));
-        if (available.length === 0) return null;
-        const randomIndex = Math.floor(Math.random() * available.length);
-        return available[randomIndex];
+  function clearRoot() { appRoot.innerHTML = ''; }
+
+  function createEl(tag, cls='', parent=null){
+    const el=document.createElement(tag);
+    if(cls) el.className=cls;
+    if(parent) parent.appendChild(el);
+    return el;
+  }
+
+  function openGallery(startIndex=0){
+    welcome.style.display='none';
+    clearRoot();
+
+    const view = createEl('div','view',appRoot);
+    const gallery = createEl('div','gallery',view);
+    const backBtn = createEl('button','back-btn',gallery);
+    backBtn.textContent='← Назад';
+    backBtn.addEventListener('click',()=>{
+      clearRoot();
+      welcome.style.display='block';
+    });
+
+    const mainArea = createEl('div','main-area',gallery);
+    const folderBig = createEl('div','folder-big',mainArea);
+    const bigImg = createEl('img','',folderBig);
+    const folderRelated = createEl('div','folder-related',mainArea);
+    const descBox = createEl('div','photo-description-box',mainArea);
+    const descTitle = createEl('h3','',descBox);
+    const descText = createEl('p','',descBox);
+    const thumbs = createEl('div','folder-thumbs',gallery);
+
+    let currentIndex=startIndex;
+
+    function showPhoto(index){
+      currentIndex=(index+mainPhotos.length)%mainPhotos.length;
+      const photo = mainPhotos[currentIndex];
+      bigImg.src=photo.src;
+      descTitle.textContent=`Папка ${currentIndex+1}`;
+      descText.textContent=photo.desc;
+
+      folderRelated.innerHTML='';
+      photo.related.forEach(src=>{
+        const t = createEl('img','thumb-related',folderRelated);
+        t.src=src;
+        t.addEventListener('click',()=>bigImg.src=src);
+      });
     }
 
-    function createFlyingPhoto() {
-        const photoSrc = getRandomUniquePhoto();
-        if (!photoSrc) return;
+    mainPhotos.forEach((ph,i)=>{
+      const t = createEl('img','thumb',thumbs);
+      t.src=ph.src;
+      t.addEventListener('click',()=>showPhoto(i));
+    });
 
-        activePhotos.add(photoSrc);
-
-        const img = document.createElement("img");
-        img.src = photoSrc;
-        img.classList.add("photo");
-
-        // адаптивный размер фото
-        const photoSize = Math.min(300, window.innerWidth / 3);
-        img.style.width = `${photoSize}px`;
-        img.style.height = 'auto';
-
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
-
-        // стартовые координаты адаптивно
-        const startX = Math.random() * (viewportWidth - photoSize);
-        const startY = Math.random() * (viewportHeight - photoSize);
-        img.style.left = `${startX}px`;
-        img.style.top = `${startY}px`;
-        img.style.opacity = "1";
-
-        container.appendChild(img);
-
-        // скорость движения адаптивная
-        const speed = window.innerWidth < 600 ? 1.2 : 2.5;
-        let dx = (Math.random() - 0.5) * speed;
-        let dy = (Math.random() - 0.5) * speed;
-        let rotation = Math.random() * 360;
-
-        function move() {
-            let x = parseFloat(img.style.left);
-            let y = parseFloat(img.style.top);
-
-            x += dx;
-            y += dy;
-            rotation += 0.3;
-
-            // отражение от границ с учетом размера фото
-            if (x <= 0 || x >= viewportWidth - photoSize) dx *= -1;
-            if (y <= 0 || y >= viewportHeight - photoSize) dy *= -1;
-
-            img.style.left = `${x}px`;
-            img.style.top = `${y}px`;
-            img.style.transform = `rotate(${rotation}deg)`;
-
-            requestAnimationFrame(move);
-        }
-
-        move();
-
-        setTimeout(() => {
-            img.remove();
-            activePhotos.delete(photoSrc);
-            createFlyingPhoto();
-        }, 20000);
-    }
-
-    for (let i = 0; i < maxPhotos; i++) {
-        setTimeout(createFlyingPhoto, i * 1000);
-    }
-
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-        heart.style.opacity = Math.random();
-        heart.style.transform = `scale(${0.8 + Math.random() * 0.6}) rotate(45deg)`;
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 10000);
-    }
-
-    setInterval(createHeart, 800);
+    showPhoto(currentIndex);
+  }
 });
