@@ -226,37 +226,37 @@ body {
 /* ---------------- Медиазапросы ---------------- */
 
 /* Для телефонов */
+/* Для телефонов */
 @media (max-width: 600px) {
   .main-area {
-    flex-direction: row; /* главные фото слева, связанные справа */
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: center;
+    flex-direction: column; /* главные фото сверху, связанные снизу */
+    align-items: center;
   }
 
   .folder-big {
-    flex: 1 1 60%;
-    max-width: 50%; /* занимает половину ширины экрана */
+    flex: 1 1 100%;
+    max-width: 95%; /* занимает почти всю ширину */
+    margin-bottom: 12px; /* отступ снизу перед связанными фото */
   }
 
   .folder-related {
-    flex: 1 1 40%;
-    max-width: 50%; /* занимает вторую половину */
+    flex: 1 1 100%;
+    max-width: 95%;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px;
-    justify-content: flex-start;
-    align-items: flex-start;
   }
 
   .thumb-related {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
   }
 
   .folder-big img {
-    max-height: 80vh;
+    max-height: 50vh;
   }
 }
+
 
 /* Для ноутбуков и больших экранов */
 @media (min-width: 951px) {
