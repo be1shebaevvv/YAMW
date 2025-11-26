@@ -1,66 +1,147 @@
-/* ---------------- Базовый стиль ---------------- */
-* { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:"Segoe UI", sans-serif; background: linear-gradient(180deg,#fff,#f8f8f8); color:#333; min-height:100vh; display:flex; flex-direction:column; }
-.topbar { position:sticky; top:0; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); display:flex; justify-content:space-between; align-items:center; padding:14px 30px; box-shadow:0 2px 12px rgba(0,0,0,0.05); z-index:10; }
-.logo { text-decoration:none; font-size:1.4rem; font-weight:bold; color:#ff5c8d; transition:0.3s; }
-.logo:hover { color:#ff2d68; }
-.btn-group { display:flex; flex-wrap:wrap; gap:8px; }
-.smile-btn { text-decoration:none; background:#ff5c8d; color:#fff; border:none; padding:10px 16px; border-radius:10px; cursor:pointer; transition:0.2s; font-size:15px; }
-.smile-btn:hover { background:#ff2d68; transform:translateY(-2px); }
+/* ========== ОБЩИЕ СТИЛИ ========== */
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+    font-family: "Segoe UI", sans-serif;
+    background:#fff;
+    color:#333;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+}
 
-.main { flex:1; padding:30px 20px; display:flex; flex-direction:column; align-items:center; }
-.hero { text-align:center; background: rgba(255,255,255,0.8); border-radius:16px; padding:40px; max-width:800px; box-shadow:0 6px 20px rgba(0,0,0,0.08);}
-.hero h2 { color:#ff5c8d; font-size:2rem; margin-bottom:12px;}
-.hero p { font-size:1rem; color:#555;}
+/* ВЕРХ */
+.topbar{
+    position:sticky;
+    top:0;
+    background:#ffffffee;
+    backdrop-filter:blur(8px);
+    padding:12px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #f1f1f1;
+    z-index:10;
+}
+.logo{
+    font-size:1.5rem;
+    font-weight:700;
+    color:#ff4c83;
+    text-decoration:none;
+    transition:.3s;
+}
+.logo:hover{color:#ff1762;}
 
-/* ---------------- Галерея ---------------- */
-.view { width:100%; display:flex; justify-content:center; }
-.gallery { display:flex; flex-direction:column; align-items:center; width:100%; max-width:1200px; gap:25px;}
-.back-btn { align-self:flex-start; background:#eee; border:none; border-radius:10px; padding:8px 16px; cursor:pointer; font-size:15px; transition:0.2s;}
-.back-btn:hover { background:#ddd;}
+.btn-group{
+    display:flex;gap:8px;
+}
+.smile-btn{
+    background:#ff4c83;
+    color:#fff; border:none;
+    padding:8px 14px;
+    font-size:14px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+.smile-btn:hover{background:#ff2366;transform:translateY(-1px);}
 
-.main-area { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; width:100%; }
-.folder-big { flex:1 1 60%; display:flex; justify-content:center; align-items:center; max-width:800px; background:white; border-radius:16px; box-shadow:0 8px 25px rgba(0,0,0,0.12); overflow:hidden;}
-.folder-big img { width:100%; height:auto; object-fit:contain; display:block; border-radius:16px;}
+/* ЦЕНТР */
+.main{flex:1;padding:30px 20px;display:flex;flex-direction:column;align-items:center;}
 
-.folder-related { flex:1 1 30%; display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:flex-start;}
-.thumb-related { width:120px; height:120px; object-fit:cover; border-radius:10px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.15); transition:0.2s;}
-.thumb-related:hover { transform:scale(1.08);}
+.hero{
+    background:#fff;
+    border-radius:14px;
+    padding:28px;
+    text-align:center;
+    box-shadow:0 4px 18px #0001;
+    max-width:800px;
+}
+.hero h2{color:#ff4c83;margin-bottom:6px;font-size:2rem;}
+.hero p{color:#666;font-size:1rem;}
 
-.photo-description-box { flex:1 1 100%; background:#fff; border-radius:14px; padding:18px 24px; box-shadow:0 6px 20px rgba(0,0,0,0.08);}
-.photo-description-box h3 { color:#ff5c8d; margin-bottom:8px;}
-.photo-description-box p { color:#444; font-size:15px; line-height:1.5;}
+/* ========== ФОТО-СТРАНИЦА ========== */
+.gallery{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:26px;}
 
-.folder-thumbs { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; width:100%;}
-.thumb { width:130px; height:130px; object-fit:cover; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.15); cursor:pointer; transition:0.2s;}
-.thumb:hover { transform:scale(1.05); }
-
-/* -----------------------------------------------------------
-   📱 МОБИЛЬНАЯ ВЕРСТКА → как на твоём рисунке №1
-------------------------------------------------------------*/
-@media (max-width:600px){
-
-  .main-area{
+.main-area{
     display:grid;
-    grid-template-rows:auto auto auto auto; /* 1 2 4 3 */
-    grid-template-columns:100%;
-    gap:12px;
-  }
+    grid-template-columns:1fr 300px;
+    gap:25px;
+}
 
-  /* 1 — мини-превью сверху */
-  .folder-thumbs{ order:1; flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px; }
+/* 2 — большое фото */
+.folder-big{
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 6px 20px #0002;
+    overflow:hidden;
+    display:flex;justify-content:center;
+    align-items:center;
+}
+.folder-big img{
+    width:100%;height:auto;
+    border-radius:14px;
+    object-fit:contain;
+}
 
-  /* 2 — большое фото */
-  .folder-big{ order:2; max-width:95%; }
+/* 1 — миниатюры сверху */
+.folder-thumbs{
+    display:flex;gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.thumb{
+    width:120px;height:120px;
+    border-radius:12px;
+    object-fit:cover;
+    cursor:pointer;
+    box-shadow:0 4px 16px #0002;
+    transition:.2s;
+}
+.thumb:hover{transform:scale(1.05);}
 
-  /* 4 — описание прямо под большой картинкой */
-  .photo-description-box{ order:3; }
+/* 3 — связанные */
+.folder-related{
+    display:flex;flex-wrap:wrap;
+    gap:10px;justify-content:center;
+}
+.thumb-related{
+    width:110px;height:110px;
+    object-fit:cover;
+    border-radius:10px;
+    cursor:pointer;
+    box-shadow:0 4px 16px #0003;
+    transition:.2s;
+}
+.thumb-related:hover{transform:scale(1.07);}
 
-  /* 3 — связанные снизу, горизонтально */
-  .folder-related{
-    order:4;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-  }
-  .thumb-related{ width:90px; height:90px; flex:0 0 auto; }
+/* 4 — описание */
+.photo-description-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 16px #0001;
+}
+.photo-description-box h3{color:#ff4c83;margin-bottom:6px;font-size:18px;}
+.photo-description-box p{font-size:15px;color:#555;line-height:1.45;}
+
+
+/* ==================== 📱 ТЕЛЕФОН (АКТИВИРУЮ СХЕМУ #1) ==================== */
+@media(max-width:700px){
+
+    .main-area{
+        display:grid;
+        grid-template-columns:1fr;
+        grid-template-rows:auto auto auto auto; /* порядок как ты просил */
+        gap:15px;
+    }
+
+    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px; }
+    .thumb{width:90px;height:90px;flex:0 0 auto;}
+
+    .folder-big{ order:2; }
+
+    .photo-description-box{ order:3; }
+
+    .folder-related{ order:4; overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px; }
+    .thumb-related{width:90px;height:90px;flex:0 0 auto;}
 }
