@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
         "media/general/photo_5222196670618078834_y.jpg"
     ];
 
-
     const container = document.createElement("div");
     container.classList.add("photo-container");
     document.body.appendChild(container);
@@ -46,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const maxPhotos = 5;
     let activePhotos = new Set();
 
-    // возвращает случайное фото, которого нет на экране
     function getRandomUniquePhoto() {
         const available = photos.filter(p => !activePhotos.has(p));
         if (available.length === 0) return null;
@@ -64,21 +62,27 @@ document.addEventListener("DOMContentLoaded", () => {
         img.src = photoSrc;
         img.classList.add("photo");
 
+        // адаптивный размер фото
+        const photoSize = Math.min(300, window.innerWidth / 3);
+        img.style.width = `${photoSize}px`;
+        img.style.height = 'auto';
+
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        const margin = 300;
-        const startX = margin + Math.random() * (viewportWidth - 300 - margin * 2);
-        const startY = margin + Math.random() * (viewportHeight - 300 - margin * 2);
-
+        // стартовые координаты адаптивно
+        const startX = Math.random() * (viewportWidth - photoSize);
+        const startY = Math.random() * (viewportHeight - photoSize);
         img.style.left = `${startX}px`;
         img.style.top = `${startY}px`;
         img.style.opacity = "1";
 
         container.appendChild(img);
 
-        let dx = (Math.random() - 0.5) * 2.5;
-        let dy = (Math.random() - 0.5) * 2.5;
+        // скорость движения адаптивная
+        const speed = window.innerWidth < 600 ? 1.2 : 2.5;
+        let dx = (Math.random() - 0.5) * speed;
+        let dy = (Math.random() - 0.5) * speed;
         let rotation = Math.random() * 360;
 
         function move() {
@@ -89,8 +93,9 @@ document.addEventListener("DOMContentLoaded", () => {
             y += dy;
             rotation += 0.3;
 
-            if (x <= 0 || x >= viewportWidth - 300) dx *= -1;
-            if (y <= 0 || y >= viewportHeight - 300) dy *= -1;
+            // отражение от границ с учетом размера фото
+            if (x <= 0 || x >= viewportWidth - photoSize) dx *= -1;
+            if (y <= 0 || y >= viewportHeight - photoSize) dy *= -1;
 
             img.style.left = `${x}px`;
             img.style.top = `${y}px`;
@@ -101,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         move();
 
-        // удалить фото через 20 секунд и заменить новым
         setTimeout(() => {
             img.remove();
             activePhotos.delete(photoSrc);
@@ -109,12 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 20000);
     }
 
-    // запуск первых фото
     for (let i = 0; i < maxPhotos; i++) {
         setTimeout(createFlyingPhoto, i * 1000);
     }
 
-    // 💖 сердечки
     function createHeart() {
         const heart = document.createElement("div");
         heart.classList.add("heart");
