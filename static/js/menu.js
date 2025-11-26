@@ -1,4 +1,32 @@
-document.addEventListener('DOMContentLoaded', () => {
+// Подключение CDN через JS (динамически)
+function loadCDN(url, type = 'js') {
+  return new Promise((resolve, reject) => {
+    let el;
+    if (type === 'js') {
+      el = document.createElement('script');
+      el.src = url;
+      el.onload = resolve;
+      el.onerror = reject;
+      document.head.appendChild(el);
+    } else if (type === 'css') {
+      el = document.createElement('link');
+      el.rel = 'stylesheet';
+      el.href = url;
+      el.onload = resolve;
+      el.onerror = reject;
+      document.head.appendChild(el);
+    }
+  });
+}
+
+// Пример подключения CDN для Lightbox2
+Promise.all([
+  loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css', 'css'),
+  loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js')
+]).then(() => {
+  console.log('CDN Lightbox загружен');
+  
+  // Твой массив mainPhotos
   const mainPhotos = [
     {
       src: 'media/beatiful/photo_5222196670618078826_y.jpg',
@@ -12,12 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "media/beatiful/photo_5222196670618078834_y.jpg",
         "media/fotbol/photo_5222082398718201271_y.jpg",
       ],
-      desc: `
-      Не знаю, в чём прикол,  
-      но на этих фото ты выглядишь просто невероятно.  
-      Настолько красивая, что хочется смотреть бесконечно.  
-      Ты — лучшая, без сомнений 💫
-      `
+      desc: `Не знаю, в чём прикол, но на этих фото ты выглядишь невероятно 💫`
     },
     {
       src: "media/estetik/photo_5222196670618078820_y.jpg",
@@ -25,85 +48,21 @@ document.addEventListener('DOMContentLoaded', () => {
         "media/estetik/photo_5222082398718201272_y.jpg",
         "media/estetik/photo_5222082398718201273_y.jpg",
         "media/estetik/photo_5222082398718201280_y.jpg",
-        "media/estetik/photo_5222196670618078820_y.jpg",
-        "media/estetik/photo_5222196670618078821_y.jpg",
-        "media/estetik/photo_5222196670618078827_y.jpg",
-        "media/estetik/photo_5222196670618078828_y.jpg",
-        "media/estetik/photo_5222196670618078834_y.jpg",
       ],
-      desc: `
-      Эти фото просто поражают своей эстетикой.  
-      Каждый кадр словно маленький шедевр — гармония света, линий и эмоций.  
-      Ты выглядишь невероятно, и хочется наслаждаться каждой деталью. ✨  
-      Самое главное ты самая красивая💫
-      `
-    },
-    {
-      src: "media/fotbol/photo_5222082398718201257_y.jpg",
-      related: [
-          "media/fotbol/photo_5222082398718201252_y.jpg",
-          "media/fotbol/photo_5222082398718201253_y.jpg",
-          "media/fotbol/photo_5222082398718201254_y.jpg",
-          "media/fotbol/photo_5222082398718201256_y.jpg",
-          "media/fotbol/photo_5222082398718201257_y.jpg",
-          "media/fotbol/photo_5222082398718201258_y.jpg",
-          "media/fotbol/photo_5222082398718201259_y.jpg",
-          "media/fotbol/photo_5222082398718201260_y.jpg",
-          "media/fotbol/photo_5222082398718201262_y.jpg",
-          "media/fotbol/photo_5222082398718201263_y.jpg",
-          "media/fotbol/photo_5222082398718201265_y.jpg",
-          "media/fotbol/photo_5222082398718201268_y.jpg",
-          "media/fotbol/photo_5222082398718201269_y.jpg",
-          "media/fotbol/photo_5222082398718201270_y.jpg",
-          "media/fotbol/photo_5222082398718201271_y.jpg",
-          "media/fotbol/photo_5222082398718201274_y.jpg",
-          "media/fotbol/photo_5222082398718201275_y.jpg",
-          "media/fotbol/photo_5222082398718201276_y.jpg",
-          "media/fotbol/photo_5222082398718201278_y.jpg",
-          "media/fotbol/photo_5222082398718201281_y.jpg",
-          "media/fotbol/photo_5222082398718201283_y.jpg",
-      ],
-      desc: `
-      Ты в полном азартe, наблюдая за игрой. ⚽  
-      Энергия футбола сочетается с твоей харизмой — это просто круто!  
-      Каждый момент на фото передает эмоции и атмосферу матча. 💥
-      `
-    },
-    {
-      src: "media/kafe/photo_5222196670618078825_y.jpg",
-      related: [
-          "media/kafe/photo_5222196670618078822_y.jpg",
-          "media/kafe/photo_5222196670618078825_y.jpg",
-          "media/kafe/photo_5222196670618078826_y.jpg",
-      ],
-      desc: 'Красота, комфорт и настроение в каждом снимке'
-    },
-    {
-      src: "media/kol/photo_5222196670618078827_y.jpg",
-      related: [
-          "media/kol/photo_5222196670618078827_y.jpg",
-          "media/kol/photo_5222196670618078831_y.jpg",
-          "media/kol/photo_5222196670618078833_y.jpg",
-      ],
-      desc: `
-      Природа Ысык-Куля и твоя грация создают невероятную гармонию. 🌊⛰️    
-      Эти фото словно маленький отпуск, полный света и вдохновения. ✨
-      `
-    },
-    {
-      src: "media/mountains/photo_5222196670618078834_y.jpg",
-      related: [
-          "media/mountains/photo_5222196670618078828_y.jpg",
-          "media/mountains/photo_5222196670618078829_y.jpg",
-          "media/mountains/photo_5222196670618078830_y.jpg",
-          "media/mountains/photo_5222196670618078834_y.jpg",
-      ],
-      desc: `
-      Кажется, что время замерло на этих кадрах.  
-      Просто восхитительно! 💫
-      `
-    },
+      desc: "Эти фото просто поражают своей эстетикой ✨"
+    }
+    // Добавь остальные объекты так же
   ];
+
+  // Пример использования: логирование всех фото
+  mainPhotos.forEach(photo => {
+    console.log('Главное фото:', photo.src);
+    console.log('Связанные фото:', photo.related);
+    console.log('Описание:', photo.desc);
+  });
+
+}).catch(err => console.error('Ошибка загрузки CDN:', err));
+
 
   const appRoot = document.getElementById('app-root');
   const smileBtn = document.getElementById('smileBtn');
