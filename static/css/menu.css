@@ -10,6 +10,17 @@ body{
 }
 
 /* ========== ШАПКА ========== */
+
+.footer{
+    width: 100%;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    color:#ff4c83;
+    padding: 16px 0;
+    letter-spacing: 1px;
+    opacity: .9;
+}
 .topbar{
     position:sticky;
     top:0;
@@ -34,6 +45,7 @@ body{
 .btn-group{display:flex;gap:8px;}
 .smile-btn{
     background:#ff4c83;
+    text-decoration: none;
     color:#fff; border:none;
     padding:8px 14px;
     font-size:14px;
