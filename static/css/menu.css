@@ -227,40 +227,34 @@ body {
 
 /* Для телефонов */
 @media (max-width: 600px) {
-  body {
-    font-size: 14px;
+  .main-area {
+    flex-direction: row; /* главные фото слева, связанные справа */
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: center;
   }
 
-  .topbar {
-    padding: 10px 15px;
+  .folder-big {
+    flex: 1 1 60%;
+    max-width: 50%; /* занимает половину ширины экрана */
   }
 
-  .logo {
-    font-size: 1.2rem;
+  .folder-related {
+    flex: 1 1 40%;
+    max-width: 50%; /* занимает вторую половину */
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
-  .smile-btn {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-
-  .hero {
-    padding: 20px;
-    max-width: 95%;
-  }
-
-  .thumb, .thumb-related {
-    width: 70px;
-    height: 70px;
+  .thumb-related {
+    width: 60px;
+    height: 60px;
   }
 
   .folder-big img {
-    max-height: 50vh;
-  }
-
-  .photo-description-box {
-    padding: 12px 16px;
-    font-size: 13px;
+    max-height: 80vh;
   }
 }
 
