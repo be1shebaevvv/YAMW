@@ -1,4 +1,4 @@
-*/
+/* ---------------- Базовый стиль ---------------- */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -62,6 +62,7 @@ body {
   transform: translateY(-2px);
 }
 
+/* ---------------- Основной контент ---------------- */
 .main {
   flex: 1;
   padding: 30px 20px;
@@ -69,7 +70,6 @@ body {
   flex-direction: column;
   align-items: center;
 }
-
 
 .hero {
   text-align: center;
@@ -91,7 +91,7 @@ body {
   color: #555;
 }
 
-
+/* ---------------- Галерея и фото ---------------- */
 .view {
   width: 100%;
   display: flex;
@@ -106,7 +106,6 @@ body {
   max-width: 1200px;
   gap: 25px;
 }
-
 
 .back-btn {
   align-self: flex-start;
@@ -123,7 +122,6 @@ body {
   background: #ddd;
 }
 
-
 .main-area {
   display: flex;
   flex-wrap: wrap;
@@ -131,7 +129,6 @@ body {
   gap: 20px;
   width: 100%;
 }
-
 
 .folder-big {
   flex: 1 1 60%;
@@ -152,7 +149,6 @@ body {
   display: block;
   border-radius: 16px;
 }
-
 
 .folder-related {
   flex: 1 1 30%;
@@ -196,7 +192,6 @@ body {
   line-height: 1.5;
 }
 
-
 .folder-thumbs {
   display: flex;
   flex-wrap: wrap;
@@ -220,7 +215,6 @@ body {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-
 .footer {
   text-align: center;
   padding: 14px;
@@ -229,56 +223,82 @@ body {
   color: #777;
 }
 
+/* ---------------- Медиазапросы ---------------- */
 
-@media (max-width: 950px) {
-  .main-area {
-    flex-direction: column;
-    align-items: center;
+/* Для телефонов */
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
   }
 
-  .folder-big,
-  .folder-related,
-  .photo-description-box {
+  .topbar {
+    padding: 10px 15px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+
+  .smile-btn {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .hero {
+    padding: 20px;
     max-width: 95%;
+  }
+
+  .thumb, .thumb-related {
+    width: 70px;
+    height: 70px;
+  }
+
+  .folder-big img {
+    max-height: 50vh;
+  }
+
+  .photo-description-box {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+}
+
+/* Для ноутбуков и больших экранов */
+@media (min-width: 951px) {
+  body {
+    font-size: 16px;
+  }
+
+  .topbar {
+    padding: 14px 30px;
+  }
+
+  .logo {
+    font-size: 1.4rem;
+  }
+
+  .smile-btn {
+    font-size: 15px;
+    padding: 10px 16px;
+  }
+
+  .hero {
+    padding: 40px;
+    max-width: 800px;
+  }
+
+  .thumb, .thumb-related {
+    width: 130px;
+    height: 130px;
   }
 
   .folder-big img {
     max-height: 70vh;
   }
 
-  .thumb {
-    width: 100px;
-    height: 100px;
-  }
-
-  .thumb-related {
-    width: 90px;
-    height: 90px;
-  }
-}
-
-@media (max-width: 600px) {
-  .smile-btn {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
   .photo-description-box {
-    font-size: 14px;
-    padding: 14px;
-  }
-
-  .folder-thumbs {
-    gap: 8px;
-  }
-
-  .thumb {
-    width: 80px;
-    height: 80px;
-  }
-
-  .thumb-related {
-    width: 70px;
-    height: 70px;
+    padding: 18px 24px;
+    font-size: 15px;
   }
 }
