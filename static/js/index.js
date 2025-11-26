@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     container.classList.add("photo-container");
     document.body.appendChild(container);
 
-    const maxPhotos = 10;
+    const maxPhotos = 5;
     let activePhotos = new Set();
 
     // возвращает случайное фото, которого нет на экране
