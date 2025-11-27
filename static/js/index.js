@@ -38,66 +38,82 @@ document.addEventListener("DOMContentLoaded", () => {
         "media/general/photo_5222196670618078834_y.jpg"
     ];
 
-  const appRoot = document.getElementById('app-root');
-  const smileBtn = document.getElementById('smileBtn');
-  const welcome = document.getElementById('welcome');
+    const appRoot = document.getElementById('app-root');
+    const smileBtn = document.getElementById('smileBtn');
+    const welcome = document.getElementById('welcome');
 
-  smileBtn.addEventListener('click', () => openGallery(0));
+    smileBtn.addEventListener('click', () => openGallery(0));
 
-  function clearRoot() { appRoot.innerHTML = ''; }
+    function clearRoot() { appRoot.innerHTML = ''; }
 
-  function createEl(tag, cls='', parent=null){
-    const el=document.createElement(tag);
-    if(cls) el.className=cls;
-    if(parent) parent.appendChild(el);
-    return el;
-  }
-
-  function openGallery(startIndex=0){
-    welcome.style.display='none';
-    clearRoot();
-
-    const view = createEl('div','view',appRoot);
-    const gallery = createEl('div','gallery',view);
-    const backBtn = createEl('button','back-btn',gallery);
-    backBtn.textContent='← Назад';
-    backBtn.addEventListener('click',()=>{
-      clearRoot();
-      welcome.style.display='block';
-    });
-
-    const mainArea = createEl('div','main-area',gallery);
-    const folderBig = createEl('div','folder-big',mainArea);
-    const bigImg = createEl('img','',folderBig);
-    const folderRelated = createEl('div','folder-related',mainArea);
-    const descBox = createEl('div','photo-description-box',mainArea);
-    const descTitle = createEl('h3','',descBox);
-    const descText = createEl('p','',descBox);
-    const thumbs = createEl('div','folder-thumbs',gallery);
-
-    let currentIndex=startIndex;
-
-    function showPhoto(index){
-      currentIndex=(index+mainPhotos.length)%mainPhotos.length;
-      const photo = mainPhotos[currentIndex];
-      bigImg.src=photo.src;
-      descTitle.textContent=`Папка ${currentIndex+1}`;
-      descText.textContent=photo.desc;
-
-      folderRelated.innerHTML='';
-      photo.related.forEach(src=>{
-        const t = createEl('img','thumb-related',folderRelated);
-        t.src=src;
-        t.addEventListener('click',()=>bigImg.src=src);
-      });
+    function createEl(tag, cls='', parent=null){
+        const el=document.createElement(tag);
+        if(cls) el.className=cls;
+        if(parent) parent.appendChild(el);
+        return el;
     }
 
-    mainPhotos.forEach((ph,i)=>{
-      const t = createEl('img','thumb',thumbs);
-      t.src=ph.src;
-      t.addEventListener('click',()=>showPhoto(i));
-    });
+    function openGallery(startIndex=0){
+        welcome.style.display='none';
+        clearRoot();
 
-    showPhoto(currentIndex);
-  }
+        const view = createEl('div','view',appRoot);
+        const gallery = createEl('div','gallery',view);
+        const backBtn = createEl('button','back-btn',gallery);
+        backBtn.textContent='← Назад';
+        backBtn.addEventListener('click',()=>{
+            clearRoot();
+            welcome.style.display='block';
+        });
+
+        const mainArea = createEl('div','main-area',gallery);
+        const folderBig = createEl('div','folder-big',mainArea);
+        const bigImg = createEl('img','',folderBig);
+        const folderRelated = createEl('div','folder-related',mainArea);
+        const descBox = createEl('div','photo-description-box',mainArea);
+        const descTitle = createEl('h3','',descBox);
+        const descText = createEl('p','',descBox);
+        const thumbs = createEl('div','folder-thumbs',gallery);
+
+        let currentIndex=startIndex;
+
+        function showPhoto(index){
+            currentIndex = (index + photos.length) % photos.length;
+            const photo = photos[currentIndex];
+            bigImg.src = photo;
+            descTitle.textContent = `Фото №${currentIndex+1}`;
+            descText.textContent = "Описание позже можно добавить";
+            folderRelated.innerHTML='';
+
+            photos.forEach(src=>{
+                const t = createEl('img','thumb-related',folderRelated);
+                t.src = src;
+                t.addEventListener('click',()=> bigImg.src=src);
+            });
+        }
+
+        photos.forEach((src,i)=>{
+            const t = createEl('img','thumb',thumbs);
+            t.src = src;
+            t.addEventListener('click',()=> showPhoto(i));
+        });
+
+        showPhoto(currentIndex);
+    }
 });
+// === ПЛАВАЮЩИЕ ФОТО-СЕРДЕЧКИ === //
+
+function createFloatingImage() {
+    const img = document.createElement("img");
+    img.src = photos[Math.floor(Math.random() * photos.length)];
+    img.className = "floating-photo";
+    img.style.left = Math.random() * 100 + "vw";
+    img.style.animationDuration = (4 + Math.random() * 4) + "s";
+
+    document.body.appendChild(img);
+
+    setTimeout(() => img.remove(), 7000);
+}
+
+// запуск появления фото каждые 1.5 секунды
+setInterval(createFloatingImage, 1500);

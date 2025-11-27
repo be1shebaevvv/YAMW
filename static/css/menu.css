@@ -109,9 +109,17 @@ body{
 
 /* Связанные №3 */
 .folder-related{
-    display:flex;flex-wrap:wrap;
-    gap:10px;justify-content:center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 колонки всегда */
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+
+    height: 460px;             /* фикс. высота блока = 4 строки */
+    grid-auto-rows: 110px;     /* каждая ячейка равная */
 }
+
+
 .thumb-related{
     width:110px;height:110px;
     object-fit:cover;border-radius:10px;

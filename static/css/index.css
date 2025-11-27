@@ -182,3 +182,21 @@ footer {
         padding: 8px 16px;
     }
 }
+
+
+
+.floating-photo {
+    position: fixed;
+    width: 90px; /* можешь менять */
+    opacity: 0.85;
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+}
