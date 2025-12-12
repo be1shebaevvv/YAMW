@@ -80,7 +80,7 @@ body{
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* <-- ЦЕНТРИРОВАНИЕ ГЕРО-БЛОКА И ГАЛЕРЕИ */
+    align-items: center; /* ЦЕНТРИРУЕТ ГЕРО-БЛОК И ГАЛЕРЕЮ */
     padding: 20px; 
 }
 
@@ -92,7 +92,7 @@ body{
     text-align:center;
     box-shadow:0 6px 20px rgba(0,0,0,0.05); 
     max-width:800px;
-    width: 100%; /* Убедимся, что занимает всю доступную ширину */
+    width: 100%; 
     margin-bottom: 20px;
 }
 .hero h2{color: var(--primary-color);margin-bottom:8px;font-size:2.2rem;font-weight: 700;}
@@ -110,6 +110,7 @@ body{
     gap:30px;
 } 
 
+/* НА ДЕСКТОПЕ: ДВЕ КОЛОНКИ */
 .main-area{
     display:grid;
     grid-template-columns:1fr 350px; 
@@ -190,7 +191,7 @@ body{
     font-size:0.95rem;
     color:var(--text-light);
     line-height:1.45;
-    white-space: pre-wrap; /* Сохраняет переносы строк из JS */
+    white-space: pre-wrap;
 }
 
 /* Связанные №3 */
@@ -221,7 +222,7 @@ body{
 /* ========== 📱 АДАПТИВНОСТЬ (Responsive) ========== */
 
 @media(max-width:900px){
-    /* Делаем боковую панель более узкой на планшетах */
+    /* Уменьшаем боковую панель на планшетах */
     .main-area{
         grid-template-columns: 1fr 250px;
         gap: 20px;
@@ -230,7 +231,7 @@ body{
 
 @media(max-width:700px){
 
-    /* 1. ШАПКА: АДАПТИВНОСТЬ КНОПОК */
+    /* 1. ШАПКА: КНОПКИ ГАРАНТИРОВАННО НЕ ЛОМАЮТСЯ */
     .topbar{
         justify-content:center; 
         flex-wrap:wrap; 
@@ -260,26 +261,38 @@ body{
     .smile-btn{
         font-size:13px;
         padding:8px 12px;
-        flex-grow: 1; 
-        min-width: 100px; 
+        flex-grow: 1; /* Равномерное распределение */
+        min-width: 120px; /* Минимальная ширина для двух кнопок в ряд */
     }
     
-    /* 2. ГАЛЕРЕЯ: ПЕРЕКЛЮЧАЕМ НА ОДНУ КОЛОНКУ */
+    /* 2. ГАЛЕРЕЯ: ПЕРЕКЛЮЧАЕМ НА ВЕРТИКАЛЬНОЕ СТАКОВАНИЕ */
+    
+    /* Главный контейнер сетки становится вертикальным */
     .main-area{
         grid-template-columns:1fr;
         gap:20px;
     }
     
-    /* Миниатюры: горизонтальный скролл */
-    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:8px; justify-content: flex-start;}
+    /* Миниатюры: горизонтальный скролл (должны быть над большим фото) */
+    .folder-thumbs{ 
+        order:1; 
+        overflow-x:auto; 
+        flex-wrap:nowrap; 
+        padding-bottom:8px; 
+        justify-content: flex-start;
+    }
     .thumb{width:100px;height:100px;flex:0 0 auto; border-radius:12px;}
-
+    
+    /* Большое фото */
     .folder-big{ order:2; border-radius:12px;}
-    .photo-description-box{ order:3; border-radius:12px;}
+    
+    /* Боковая панель (описание + связанные фото) */
+    .right-panel {
+        order: 3;
+    }
 
     /* Связанные фото: горизонтальный скролл */
     .folder-related{ 
-        order:4; 
         max-height: none; 
         overflow-x:auto; 
         overflow-y: hidden;
