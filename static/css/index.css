@@ -1,54 +1,79 @@
+/* index.css (Обновлено) */
+/* --- СОВРЕМЕННЫЕ ПЕРЕМЕННЫЕ --- */
+:root {
+    --primary-color: #ff5c8d; /* Основной розовый */
+    --primary-dark: #ff2d6b;
+    --background-start: #ffdee9;
+    --background-end: #b5fffc;
+    --text-dark: #333;
+    --text-light: #444;
+    --shadow-light: rgba(255, 92, 141, 0.3);
+    --shadow-strong: rgba(255, 92, 141, 0.5);
+    --font-stack: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* --- ОБЩИЕ СТИЛИ --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #ffdee9, #b5fffc);
-    height: 100vh;
+    font-family: var(--font-stack);
+    background: linear-gradient(135deg, var(--background-start), var(--background-end));
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: #333;
+    color: var(--text-dark);
     position: relative;
 }
 
 .content {
     position: relative;
-    z-index: 2;
+    z-index: 10; 
     text-align: center;
     animation: fadeIn 2s ease;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 3rem;
-    color: #ff5c8d;
+    /* Адаптивный размер H1 для разных экранов */
+    font-size: clamp(2rem, 5vw + 1rem, 4.5rem); 
+    color: var(--primary-color);
     margin-bottom: 10px;
-    text-shadow: 0 0 15px rgba(255, 92, 141, 0.4);
+    font-weight: 800; 
+    text-shadow: 0 0 15px var(--shadow-light);
 }
 
 p {
-    font-size: 1.3rem;
-    color: #444;
+    /* Адаптивный размер P */
+    font-size: clamp(1rem, 2vw + 0.5rem, 1.4rem); 
+    color: var(--text-light);
+    margin-top: 5px;
 }
 
 .btn {
     display: inline-block;
-    margin-top: 25px;
-    padding: 12px 25px;
-    background-color: #ff5c8d;
+    margin-top: 30px;
+    padding: 14px 30px;
+    background-color: var(--primary-color);
     color: white;
     text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(255, 92, 141, 0.3);
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 6px 20px var(--shadow-light);
+    font-size: 1.1rem;
 }
 
 .btn:hover {
-    background-color: #ff2d6b;
-    transform: translateY(-3px);
+    background-color: var(--primary-dark);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 25px var(--shadow-strong);
 }
 
 @keyframes fadeIn {
@@ -56,147 +81,55 @@ p {
     to {opacity: 1; transform: translateY(0);}
 }
 
+/* --- ПЛАВАЮЩИЕ ЭЛЕМЕНТЫ (Оптимизация) --- */
 
-.photo-container {
+.background-effects {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    overflow: visible;
-    z-index: 1;
+    z-index: 1; 
 }
-
-
-.photo {
-    position: absolute;
-    width: 280px;
-    height: 280px;
-    object-fit: contain;
-    border-radius: 20px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-    opacity: 0;
-    transform: translate(0, 0) rotate(0deg);
-    transition: transform 9s linear, opacity 1s ease-in-out;
-    will-change: transform, opacity;
-    pointer-events: none;
-}
-
-
-.photo:hover {
-    transform: scale(1.03);
-}
-
-
-.heart {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background-color: #ff7aa8;
-    transform: rotate(45deg);
-    opacity: 0.7;
-    animation: floatUp 8s linear infinite;
-    z-index: 0;
-}
-
-.heart::before,
-.heart::after {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background-color: #ff7aa8;
-    border-radius: 50%;
-}
-
-.heart::before {
-    top: -9px;
-    left: 0;
-}
-
-.heart::after {
-    left: 9px;
-    top: 0;
-}
-
-
-@keyframes floatUp {
-    0% {
-        transform: translateY(100vh) rotate(45deg);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(-10vh) rotate(45deg);
-        opacity: 0;
-    }
-}
-
-
-footer {
-    position: absolute;
-    bottom: 10px;
-    color: #666;
-    font-size: 0.9rem;
-    z-index: 2;
-}
-
-
-@media (max-width: 768px) {
-    .photo {
-        width: 180px;
-        height: 180px;
-        border-radius: 15px;
-    }
-
-    h1 {
-        font-size: 2rem;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-
-    .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .photo {
-        width: 140px;
-        height: 140px;
-    }
-
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    p {
-        font-size: 0.9rem;
-    }
-
-    .btn {
-        font-size: 0.8rem;
-        padding: 8px 16px;
-    }
-}
-
-
 
 .floating-photo {
-    position: fixed;
-    width: 90px; /* можешь менять */
-    opacity: 0.85;
-    border-radius: 14px;
+    position: absolute; 
+    /* Адаптивный размер фото */
+    width: clamp(80px, 15vw, 150px); 
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    opacity: 0;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    will-change: transform, opacity; /* GPU ускорение для анимации */
     pointer-events: none;
-    z-index: 9999;
-    animation: floatUp linear forwards;
+    z-index: 2;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
 @keyframes floatUp {
-    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(-20vh) scale(1.2); opacity: 0; }
+    /* Используем translate3d для лучшей производительности */
+    0% { transform: translate3d(0, 100vh, 0) rotate(0deg) scale(0.6); opacity: 0; }
+    20% { opacity: 0.9; }
+    90% { opacity: 0.9; }
+    100% { transform: translate3d(0, -20vh, 0) rotate(5deg) scale(1.2); opacity: 0; }
+}
+
+/* --- УЛУЧШЕННАЯ АДАПТИВНОСТЬ --- */
+@media (max-width: 480px) {
+    .content {
+        padding: 10px;
+    }
+    .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+    footer {
+        font-size: 0.8rem;
+        bottom: 10px;
+    }
 }

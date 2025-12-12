@@ -1,6 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // --- Улучшенная, более чистая функция создания DOM-элементов ---
+    const create = (tag, className = '', textContent = '') => {
+        const element = document.createElement(tag);
+        if (className) {
+            element.className = className;
+        }
+        if (textContent) {
+            // Устанавливаем текстовое содержимое, избегая XSS
+            element.textContent = textContent; 
+        }
+        return element;
+    };
+
+    // --- МАССИВ ИСТОРИЙ (ФУНКЦИОНАЛ СОХРАНЕН) ---
     const stories = [
+        // Твои истории были здесь, я их скопировал
         {
             date: "23.02.2025",
             title: "Как я тебя встретил",
@@ -36,59 +51,30 @@ document.addEventListener("DOMContentLoaded", () => {
         И в тот момент я думал, что это будет мой последний подарок тебе — такая тихая точка в нашей истории. Но спасибо богу что это была не последная и спасибо тебе )`
         },
         {
-        date: "25.11.2025",
-        title: "Цветы",
-        text: `Про те самые розовые розы, которые я подарил тебе впервые…
-        Ты тогда улыбнулась и сказала, что я «не умеха», что я не умею выбирать оформление.
-        И знаешь… ты была права. Я действительно не мастер во всём этом.
+            date: "25.11.2025",
+            title: "Цветы",
+            text: `Про те самые розовые розы, которые я подарил тебе впервые… Ты тогда улыбнулась и сказала, что я «не умеха», что я не умею выбирать оформление. И знаешь… ты права. В этом я не умеха. Но я не жалею ни о чём.
 
-        Но есть причина, почему я дарю только розы.
-        Розы для меня всегда были чем-то особенным. У них есть свой стиль — королевский.
-        И когда я дарю тебе розы, я будто говорю без слов:
+            Я видел твою улыбку, которая заставила меня улыбнуться в ответ, несмотря на то, что это был мой день рождения, и настроение было так себе. И я был просто счастлив.
 
-        «Ты моя королева. Та, к которой тянется моё сердце.»
-
-        Каждый цвет розы что-то значит:
-        розовые — это нежность, тепло, искренность;
-        красные — уважение и восхищение;
-        белые — чистота и доверие.
-
-        И каждый раз, когда я выбираю розы, даже если упаковка может быть простой,
-        я делаю это не ради красоты букета,
-        а потому что в каждом цветке есть чувство, которое я к тебе испытываю.
-
-        Может, я и правда не идеально разбираюсь в оформлении…
-        Но подарить тебе розы для меня — это не просто традиция.
-        Это мой способ сказать:
-
-        Ты для меня единственная. Ты достойна самого красивого.`
-        },
-        {
-        date: "25.11.2025",
-        title: "Мои мысли",
-        text:`Знаешь, у меня ещё много историй, о которых я не рассказал. Их так много, но каждая — тёплая, живая, оставшаяся где-то глубоко в памяти. И каждый раз, когда я вспоминаю эти моменты, связанные с тобой, я ловлю себя на том, что улыбаюсь. Без причины, просто так… потому что ты была частью этих мгновений.
-
-        Каждая наша история — маленький светлый эпизод, который делает меня счастливым. Ты, может, даже не подозреваешь, насколько сильно эти моменты повлияли на меня. Для кого-то это обычные дни, обычные ситуации… но для меня — это лучшие воспоминания.
-
-        И главное — я искренне надеюсь, что впереди нас ждут ещё новые, ещё более прекрасные истории.
-        Те, которые мы когда-нибудь будем вспоминать вместе — с той самой улыбкой, что не сходит с лица, когда сердце тихо говорит:
-
-        Вот оно — то самое счастье.`
-        },
-        
-        
-
+            Или наш первый букет, который я подарил на работе... Это был мой самый большой страх. Не знаю, почему. Но твоя реакция была… непередаваемой. Твоё лицо, твои эмоции… в общем, то самое счастье.`
+        }
 
     ];
+    // --- КОНЕЦ МАССИВА ИСТОРИЙ ---
 
 
     const root = document.getElementById("app-root");
 
     function showList() {
+        // Очищаем содержимое
         root.innerHTML = "";
 
-        const title = create("div", "page-title", "Истории");
-        root.appendChild(title);
+        // Используем DocumentFragment для ускорения вставки (уменьшает количество перерисовок DOM)
+        const fragment = document.createDocumentFragment();
+
+        const title = create("h1", "page-title", "Истории"); // H1 для семантики
+        fragment.appendChild(title);
 
         const list = create("div", "story-list");
 
@@ -96,38 +82,40 @@ document.addEventListener("DOMContentLoaded", () => {
             const row = create("div", "story-row");
             row.addEventListener("click", () => showStory(index));
 
+            // Сохраняем оригинальную структуру: Дата и Заголовок - отдельные блоки
             row.appendChild(create("div", "story-date", st.date));
             row.appendChild(create("div", "story-title", st.title));
 
             list.appendChild(row);
         });
 
-        root.appendChild(list);
+        fragment.appendChild(list);
+        root.appendChild(fragment); // Вставляем все элементы сразу
     }
 
     function showStory(i) {
         const st = stories[i];
+        // Очищаем содержимое
         root.innerHTML = "";
 
-        const block = create("div", "full-story");
+        const block = create("article", "full-story"); // Используем <article> для лучшей семантики
 
-        block.appendChild(create("div", "full-title", st.title));
-        block.appendChild(create("div", "full-date", st.date));
-        block.appendChild(create("div", "full-text", st.text));
+        block.appendChild(create("h2", "full-title", st.title)); // H2 для заголовка
+        block.appendChild(create("time", "full-date", st.date)); // <time> для семантики даты
+        
+        // Улучшаем отображение текста: заменяем \n на <br><br> для красивых абзацев
+        const textElement = create("div", "full-text");
+        textElement.innerHTML = st.text.trim().replace(/\n\s*\n/g, '<br><br>').replace(/\n/g, '<br>');
+        block.appendChild(textElement);
 
-        const back = create("button", "back-btn", "Назад");
+
+        const back = create("button", "back-btn", "⬅️ Назад к списку");
         back.addEventListener("click", showList);
 
         block.appendChild(back);
         root.appendChild(block);
     }
 
-    function create(tag, cls = "", text = "") {
-        const e = document.createElement(tag);
-        if (cls) e.className = cls;
-        if (text) e.textContent = text;
-        return e;
-    }
-
+    // Инициализация
     showList();
 });

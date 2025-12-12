@@ -1,12 +1,15 @@
+// menu.js (Обновлено, Чище и Быстрее)
+
 document.addEventListener('DOMContentLoaded', () => {
 
-  // --- Подключение CDN динамически ---
+  // --- Вспомогательная функция загрузки CDN (ЧИЩЕ) ---
   function loadCDN(url, type = 'js') {
     return new Promise((resolve, reject) => {
       let el;
       if (type === 'js') {
         el = document.createElement('script');
         el.src = url;
+        el.async = true; // Асинхронная загрузка
       } else if (type === 'css') {
         el = document.createElement('link');
         el.rel = 'stylesheet';
@@ -18,19 +21,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Подключаем Lightbox
+  // Подключаем Lightbox (сохраняем функционал)
   Promise.all([
     loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/css/lightbox.min.css', 'css'),
     loadCDN('https://cdn.jsdelivr.net/npm/lightbox2@2.11.4/dist/js/lightbox.min.js')
   ]).then(() => {
+    
+    // Настройки Lightbox для современного вида
+    if (window.lightbox) {
+        window.lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true,
+            'fadeDuration': 300,
+            'imageFadeDuration': 300
+        });
+    }
 
-    // --- Твои DOM элементы ---
     const appRoot = document.getElementById('app-root');
     const welcome = document.getElementById('welcome');
     const smileBtn = document.getElementById('smileBtn');
 
-    // --- Массив фотографий ---
-          const mainPhotos = [
+    // --- МАССИВ ФОТОГРАФИЙ (ФУНКЦИОНАЛ СОХРАНЕН) ---
+    const mainPhotos = [
+      // ... (Весь ваш массив mainPhotos)
       {
         src: 'media/beatiful/photo_5222196670618078826_y.jpg',
         related: [
@@ -136,12 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     ]
 
-    // --- Вспомогательные функции ---
-    function clearGallery() { 
-      const existing = document.querySelector('.view');
-      if (existing) existing.remove(); 
-    }
-
+    // --- Вспомогательные функции (ЧИЩЕ) ---
     function createEl(tag, cls = '', parent = null) {
       const el = document.createElement(tag);
       if (cls) el.className = cls;
@@ -149,18 +157,31 @@ document.addEventListener('DOMContentLoaded', () => {
       return el;
     }
 
+    // --- УЛУЧШЕННЫЙ СВАЙП ---
     function enableSwipe(img, onNext, onPrev) {
       let startX = 0;
-      img.addEventListener('touchstart', e => (startX = e.touches[0].clientX), { passive: true });
+      let isSwiping = false;
+
+      img.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+        isSwiping = true;
+      }, { passive: true });
+
       img.addEventListener('touchend', e => {
+        if (!isSwiping) return;
         const dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dx) > 50) (dx < 0 ? onNext() : onPrev());
+        isSwiping = false;
+
+        // Порог свайпа 50px
+        if (Math.abs(dx) > 50) {
+            dx < 0 ? onNext() : onPrev();
+        }
       }, { passive: true });
     }
 
     // --- Функция открытия галереи ---
     function openGallery(startIndex = 0) {
-      clearGallery();
+      appRoot.innerHTML = ''; 
       welcome.style.display = 'none';
 
       const view = createEl('div', 'view', appRoot);
@@ -169,47 +190,96 @@ document.addEventListener('DOMContentLoaded', () => {
       const backBtn = createEl('button', 'back-btn', gallery);
       backBtn.textContent = '← Назад';
       backBtn.addEventListener('click', () => {
-        view.remove();
-        welcome.style.display = 'block';
+        // Плавное удаление и возврат к приветствию
+        gallery.classList.add('fade-out');
+        setTimeout(() => {
+          view.remove();
+          welcome.style.display = 'block';
+        }, 300); // Соответствует времени анимации
       });
-
+      
       const mainArea = createEl('div', 'main-area', gallery);
-      const bigWrap = createEl('div', 'folder-big', mainArea);
-      const bigImg = createEl('img', '', bigWrap);
-      bigImg.setAttribute('data-lightbox', 'gallery');
-
-      const relatedWrap = createEl('div', 'folder-related', mainArea);
-      const descBox = createEl('div', 'photo-description-box', mainArea);
+      
+      // Создаем обертку для правой панели
+      const rightPanel = createEl('div', 'right-panel', mainArea);
+      
+      const descBox = createEl('div', 'photo-description-box', rightPanel);
       const descTitle = createEl('h3', '', descBox);
       const descText = createEl('p', '', descBox);
+
+      const relatedWrap = createEl('div', 'folder-related', rightPanel);
+
+      const bigWrap = createEl('div', 'folder-big', mainArea);
+      const bigImg = createEl('img', '', bigWrap);
+      bigImg.setAttribute('data-lightbox', 'gallery-set'); 
+      bigImg.setAttribute('alt', 'Большое фото');
+
       const thumbs = createEl('div', 'folder-thumbs', gallery);
+      const thumbElements = []; 
 
       let currentIndex = startIndex;
 
+      function updateBigImage(src) {
+          // Для плавного перехода при смене большого фото
+          bigImg.style.opacity = 0;
+          setTimeout(() => {
+              bigImg.src = src;
+              bigImg.style.opacity = 1;
+          }, 150);
+          
+          // Обновляем ссылку для Lightbox
+          bigImg.setAttribute('href', src);
+      }
+      
       function showPhoto(index) {
         currentIndex = (index + mainPhotos.length) % mainPhotos.length;
         const photo = mainPhotos[currentIndex];
-        bigImg.src = photo.src;
+        
+        updateBigImage(photo.src);
+        
         descTitle.textContent = `Папка ${currentIndex + 1}`;
-        descText.textContent = photo.desc;
+        // Убираем лишние пробелы и переносы из текста
+        descText.textContent = photo.desc.trim(); 
 
         relatedWrap.innerHTML = '';
+        
+        // Обновляем связанные фото
+        const relatedFragment = document.createDocumentFragment();
         photo.related.forEach(src => {
-          const thumb = createEl('img', 'thumb-related', relatedWrap);
+          const thumb = createEl('img', 'thumb-related', relatedFragment);
           thumb.src = src;
-          thumb.addEventListener('click', () => bigImg.src = src);
+          thumb.setAttribute('data-lightbox', 'related-set'); 
+          thumb.setAttribute('href', src);
+          thumb.setAttribute('alt', 'Связанное фото');
+          
+          // Обработчик для смены большого фото при клике на связанное
+          thumb.addEventListener('click', (e) => {
+              e.preventDefault(); 
+              updateBigImage(src);
+          });
+          relatedWrap.appendChild(thumb);
         });
+
+        // Обновляем активную миниатюру
+        thumbElements.forEach((t, i) => t.classList.toggle('active', i === currentIndex));
       }
 
+      // Создаем миниатюры
       mainPhotos.forEach((ph, i) => {
         const t = createEl('img', 'thumb', thumbs);
         t.src = ph.src;
+        t.setAttribute('alt', `Миниатюра ${i + 1}`);
         t.addEventListener('click', () => showPhoto(i));
+        thumbElements.push(t);
       });
 
-      enableSwipe(bigImg, () => showPhoto(currentIndex + 1), () => showPhoto(currentIndex - 1));
+      // Добавляем свайп
+      enableSwipe(bigImg, 
+          () => showPhoto(currentIndex + 1), 
+          () => showPhoto(currentIndex - 1)  
+      );
 
-      // Предзагрузка фото
+      // Предзагрузка фото (для более быстрого переключения)
       mainPhotos.forEach(ph => {
         new Image().src = ph.src;
         ph.related.forEach(r => new Image().src = r);
