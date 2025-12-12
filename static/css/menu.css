@@ -1,4 +1,5 @@
-/* menu.css (ОБНОВЛЕННЫЙ) */
+/* menu.css (Полная, Адаптивная Версия) */
+
 /* --- СОВРЕМЕННЫЕ ПЕРЕМЕННЫЕ --- */
 :root {
     --primary-color: #ff4c83; /* Основной розовый */
@@ -9,11 +10,16 @@
     --border-color: #f1f1f1;
     --shadow-light: rgba(255, 76, 131, 0.2);
     --shadow-strong: rgba(0, 0, 0, 0.08);
+    /* Современный шрифт-стек: Poppins или системный */
     --font-stack: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 /* ========== ОБЩИЕ СТИЛИ ========== */
-*{margin:0;padding:0;box-sizing:border-box;}
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Важно для адаптивности */
+}
 body{
     font-family: var(--font-stack);
     background: var(--background-color);
@@ -23,7 +29,7 @@ body{
     min-height:100vh;
 }
 
-/* ========== ШАПКА ========== */
+/* ========== ШАПКА (TOPBAR) ========== */
 .topbar{
     position:sticky;
     top:0;
@@ -45,7 +51,10 @@ body{
     transition:.3s;
 }
 
-.btn-group{display:flex;gap:10px;}
+.btn-group{
+    display:flex;
+    gap:10px;
+}
 .smile-btn{
     background: var(--primary-color);
     text-decoration: none;
@@ -65,17 +74,17 @@ body{
     box-shadow: 0 6px 15px var(--shadow-strong);
 }
 
-/* --- ДОБАВЛЕНО/ИЗМЕНЕНО: ЦЕНТРИРОВАНИЕ КОНТЕНТА ВНУТРИ MAIN --- */
+/* ========== ГЛАВНЫЙ КОНТЕНЕР (MAIN) - ЦЕНТРИРОВАНИЕ ========== */
 .main {
-    flex: 1; /* Позволяет main занять оставшееся вертикальное пространство */
+    flex: 1; 
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* <-- ЭТО ЦЕНТРИРУЕТ ВСЕ БЛОКИ (.hero и #app-root) ПО ГОРИЗОНТАЛИ */
-    padding: 20px; /* Общие отступы */
+    align-items: center; /* <-- ЦЕНТРИРОВАНИЕ ГЕРО-БЛОКА И ГАЛЕРЕИ */
+    padding: 20px; 
 }
 
-/* ========== ГЛАВНАЯ ========== */
+/* ========== ГЕРО-БЛОК (ДОБРО ПОЖАЛОВАТЬ) ========== */
 .hero{
     background:white;
     border-radius:18px; 
@@ -83,16 +92,26 @@ body{
     text-align:center;
     box-shadow:0 6px 20px rgba(0,0,0,0.05); 
     max-width:800px;
+    width: 100%; /* Убедимся, что занимает всю доступную ширину */
     margin-bottom: 20px;
 }
 .hero h2{color: var(--primary-color);margin-bottom:8px;font-size:2.2rem;font-weight: 700;}
+.hero p{color: var(--text-light); font-size: 1.1rem;}
 
 /* ========== ГАЛЕРЕЯ ========== */
-.gallery{width:100%;max-width:1200px;display:flex;flex-direction:column;gap:30px;} 
+#app-root {
+    width: 100%;
+    max-width: 1200px; /* Ограничение ширины для галереи */
+}
+.gallery{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+} 
 
 .main-area{
     display:grid;
-    /* Увеличенная боковая панель для лучшей читаемости */
     grid-template-columns:1fr 350px; 
     gap:30px;
 }
@@ -120,10 +139,11 @@ body{
     display:flex;justify-content:center;align-items:center;
 }
 .folder-big img{
-    width:100%;height:auto;
+    width:100%;
+    height:auto;
     border-radius:18px;
     object-fit:contain;
-    transition: opacity 0.3s ease; /* Плавный переход */
+    transition: opacity 0.3s ease;
 }
 
 /* Миниатюры №1 (Основной список) */
@@ -140,7 +160,6 @@ body{
     border: 3px solid transparent;
     transition:.3s;
 }
-/* Активная миниатюра */
 .thumb.active,
 .thumb:hover{
     transform:scale(1.05);
@@ -152,6 +171,26 @@ body{
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+/* Описание */
+.photo-description-box{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 4px 16px rgba(0,0,0,0.05);
+}
+.photo-description-box h3{
+    color:var(--primary-color);
+    margin-bottom:6px;
+    font-size:1.1rem;
+    font-weight: 600;
+}
+.photo-description-box p{
+    font-size:0.95rem;
+    color:var(--text-light);
+    line-height:1.45;
+    white-space: pre-wrap; /* Сохраняет переносы строк из JS */
 }
 
 /* Связанные №3 */
@@ -179,7 +218,7 @@ body{
 .thumb-related:hover{transform:scale(1.05);}
 
 
-/* ========== 📱 АДАПТИВНОСТЬ ========== */
+/* ========== 📱 АДАПТИВНОСТЬ (Responsive) ========== */
 
 @media(max-width:900px){
     /* Делаем боковую панель более узкой на планшетах */
@@ -191,15 +230,24 @@ body{
 
 @media(max-width:700px){
 
-    /* Шапка: кнопки переносятся */
+    /* 1. ШАПКА: АДАПТИВНОСТЬ КНОПОК */
     .topbar{
-        flex-wrap:wrap;
-        justify-content:center;
+        justify-content:center; 
+        flex-wrap:wrap; 
         gap:10px;
         padding:10px 14px;
     }
-    .logo{order: -1;} 
+    
+    /* Логотип: на первой строке, центрирован */
+    .logo{
+        order: -1; 
+        width: 100%; 
+        text-align: center; 
+        margin-bottom: 10px;
+        font-size: 1.5rem;
+    } 
 
+    /* Группа кнопок: занимает всю ширину */
     .btn-group{
         width:100%;
         display:flex;
@@ -207,25 +255,29 @@ body{
         justify-content:center;
         gap:8px;
     }
+    
+    /* Кнопки: растягиваются равномерно */
     .smile-btn{
         font-size:13px;
         padding:8px 12px;
-        flex-grow: 1;
+        flex-grow: 1; 
+        min-width: 100px; 
     }
-
-    /* Галерея: переключаем на одну колонку */
+    
+    /* 2. ГАЛЕРЕЯ: ПЕРЕКЛЮЧАЕМ НА ОДНУ КОЛОНКУ */
     .main-area{
         grid-template-columns:1fr;
         gap:20px;
     }
     
-    /* Миниатюры и связанные фото - горизонтальный скролл */
-    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:8px;}
+    /* Миниатюры: горизонтальный скролл */
+    .folder-thumbs{ order:1; overflow-x:auto; flex-wrap:nowrap; padding-bottom:8px; justify-content: flex-start;}
     .thumb{width:100px;height:100px;flex:0 0 auto; border-radius:12px;}
 
     .folder-big{ order:2; border-radius:12px;}
     .photo-description-box{ order:3; border-radius:12px;}
 
+    /* Связанные фото: горизонтальный скролл */
     .folder-related{ 
         order:4; 
         max-height: none; 
@@ -233,6 +285,7 @@ body{
         overflow-y: hidden;
         display: flex; 
         flex-wrap: nowrap;
+        justify-content: flex-start;
     }
     .thumb-related{
         width:90px;
