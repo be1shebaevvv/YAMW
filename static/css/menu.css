@@ -1,8 +1,7 @@
-/* menu.css (Полная, Адаптивная Версия) */
+/* menu.css (Оптимизированная Адаптивная Версия) */
 
-/* --- СОВРЕМЕННЫЕ ПЕРЕМЕННЫЕ --- */
 :root {
-    --primary-color: #ff4c83; /* Основной розовый */
+    --primary-color: #ff4c83;
     --primary-dark: #ff2366;
     --background-color: #fcfcfc;
     --text-dark: #333;
@@ -10,160 +9,152 @@
     --border-color: #f1f1f1;
     --shadow-light: rgba(255, 76, 131, 0.2);
     --shadow-strong: rgba(0, 0, 0, 0.08);
-    /* Современный шрифт-стек: Poppins или системный */
-    --font-stack: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --font-stack: 'Poppins', -apple-system, sans-serif;
 }
 
-/* ========== ОБЩИЕ СТИЛИ ========== */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
-    box-sizing: border-box; /* Важно для адаптивности */
+    box-sizing: border-box;
 }
-body{
+
+body {
     font-family: var(--font-stack);
     background: var(--background-color);
     color: var(--text-dark);
-    display:flex;
-    flex-direction:column;
-    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.5;
 }
 
 /* ========== ШАПКА (TOPBAR) ========== */
-.topbar{
-    position:sticky;
-    top:0;
-    /* Полупрозрачный фон с размытием */
-    background:rgba(255, 255, 255, 0.95);
-    backdrop-filter:blur(8px);
-    padding:12px 24px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    border-bottom:1px solid var(--border-color);
-    z-index:1000;
-}
-.logo{
-    font-size:1.6rem;
-    font-weight:700;
-    color: var(--primary-color);
-    text-decoration:none;
-    transition:.3s;
+.topbar {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
 }
 
-.btn-group{
-    display:flex;
-    gap:10px;
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
 }
-.smile-btn{
+
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.smile-btn {
     background: var(--primary-color);
     text-decoration: none;
-    color:#fff; 
-    border:none;
-    padding:10px 16px; 
-    font-size:15px;
-    border-radius:10px; 
-    cursor:pointer;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    cursor: pointer;
     font-weight: 600;
-    transition:.3s;
-    box-shadow: 0 4px 12px var(--shadow-light);
+    transition: 0.3s;
+    box-shadow: 0 4px 10px var(--shadow-light);
+    white-space: nowrap;
 }
-.smile-btn:hover{
+
+.smile-btn:hover {
     background: var(--primary-dark);
-    transform:translateY(-2px);
-    box-shadow: 0 6px 15px var(--shadow-strong);
+    transform: translateY(-2px);
 }
 
-/* ========== ГЛАВНЫЙ КОНТЕНЕР (MAIN) - ЦЕНТРИРОВАНИЕ ========== */
+/* ========== ГЛАВНЫЙ КОНТЕНТ ========== */
 .main {
-    flex: 1; 
+    flex: 1;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* ЦЕНТРИРУЕТ ГЕРО-БЛОК И ГАЛЕРЕЮ */
-    padding: 20px; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-/* ========== ГЕРО-БЛОК (ДОБРО ПОЖАЛОВАТЬ) ========== */
-.hero{
-    background:white;
-    border-radius:18px; 
-    padding:30px;
-    text-align:center;
-    box-shadow:0 6px 20px rgba(0,0,0,0.05); 
-    max-width:800px;
-    width: 100%; 
-    margin-bottom: 20px;
-}
-.hero h2{color: var(--primary-color);margin-bottom:8px;font-size:2.2rem;font-weight: 700;}
-.hero p{color: var(--text-light); font-size: 1.1rem;}
-
-/* ========== ГАЛЕРЕЯ ========== */
-#app-root {
-    width: 100%;
-    max-width: 1200px; /* Ограничение ширины для галереи */
-}
-.gallery{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:30px;
-} 
-
-/* НА ДЕСКТОПЕ: ДВЕ КОЛОНКИ */
-.main-area{
-    display:grid;
-    grid-template-columns:1fr 350px; 
-    gap:30px;
+.hero {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 15px var(--shadow-strong);
+    margin-bottom: 25px;
 }
 
-/* Кнопка назад */
-.back-btn{
-    background: #555;
-    color: white;
-    padding: 10px 20px;
+.hero h2 { color: var(--primary-color); margin-bottom: 5px; font-size: 1.8rem; }
+.hero p { color: var(--text-light); font-size: 1rem; }
+
+/* ========== ГАЛЕРЕЯ (СЕТКА) ========== */
+.main-area {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 25px;
+    align-items: start;
+}
+
+/* Кнопка назад внутри галереи */
+.back-btn {
+    background: #f0f0f0;
+    color: #555;
+    padding: 8px 18px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
+    margin-bottom: 15px;
     transition: 0.3s;
-    margin-bottom: 10px;
-    width: fit-content;
 }
+
+.back-btn:hover { background: #e0e0e0; }
 
 /* Большое фото */
-.folder-big{
-    background:#fff;
-    border-radius:18px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.1);
-    overflow:hidden;
-    display:flex;justify-content:center;align-items:center;
-}
-.folder-big img{
-    width:100%;
-    height:auto;
-    border-radius:18px;
-    object-fit:contain;
-    transition: opacity 0.3s ease;
+.folder-big {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px var(--shadow-strong);
+    overflow: hidden;
+    line-height: 0;
 }
 
-/* Миниатюры №1 (Основной список) */
-.folder-thumbs{
-    display:flex;gap:15px;
-    flex-wrap:wrap;justify-content:center;
+.folder-big img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
-.thumb{
-    width:140px;height:140px; 
-    border-radius:15px;
-    object-fit:cover;
-    cursor:pointer;
-    box-shadow:0 4px 18px rgba(0,0,0,0.1);
+
+/* Миниатюры (Список под большим фото на ПК) */
+.folder-thumbs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.thumb {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    object-fit: cover;
+    cursor: pointer;
     border: 3px solid transparent;
-    transition:.3s;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
-.thumb.active,
-.thumb:hover{
-    transform:scale(1.05);
+
+.thumb.active, .thumb:hover {
+    transform: scale(1.05);
     border-color: var(--primary-color);
 }
 
@@ -174,150 +165,100 @@ body{
     gap: 20px;
 }
 
-/* Описание */
-.photo-description-box{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 4px 16px rgba(0,0,0,0.05);
-}
-.photo-description-box h3{
-    color:var(--primary-color);
-    margin-bottom:6px;
-    font-size:1.1rem;
-    font-weight: 600;
-}
-.photo-description-box p{
-    font-size:0.95rem;
-    color:var(--text-light);
-    line-height:1.45;
-    white-space: pre-wrap;
+.photo-description-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px var(--shadow-strong);
 }
 
-/* Связанные №3 */
-.folder-related{
+.photo-description-box h3 { color: var(--primary-color); margin-bottom: 8px; font-size: 1.1rem; }
+.photo-description-box p { font-size: 0.95rem; color: var(--text-light); white-space: pre-wrap; }
+
+/* Связанные фото */
+.folder-related {
     background: #fff;
     padding: 15px;
     border-radius: 15px;
-    box-shadow:0 4px 16px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px var(--shadow-strong);
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 12px;
-    max-height: 400px;
-    overflow-y: auto;
+    grid-template-columns: repeat(8, 80px);
+    gap: 10px;
 }
 
-.thumb-related{
-    width:100%;
-    aspect-ratio: 1 / 1; 
-    object-fit:cover;
-    border-radius:10px;
-    cursor:pointer;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
-    transition:.2s;
-}
-.thumb-related:hover{transform:scale(1.05);}
-
-
-/* ========== 📱 АДАПТИВНОСТЬ (Responsive) ========== */
-
-@media(max-width:900px){
-    /* Уменьшаем боковую панель на планшетах */
-    .main-area{
-        grid-template-columns: 1fr 250px;
-        gap: 20px;
-    }
+.thumb-related {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-@media(max-width:700px){
+.thumb-related:hover { transform: scale(1.08); }
 
-    /* 1. ШАПКА: КНОПКИ ГАРАНТИРОВАННО НЕ ЛОМАЮТСЯ */
-    .topbar{
-        justify-content:center; 
-        flex-wrap:wrap; 
-        gap:10px;
-        padding:10px 14px;
-    }
-    
-    /* Логотип: на первой строке, центрирован */
-    .logo{
-        order: -1; 
-        width: 100%; 
-        text-align: center; 
-        margin-bottom: 10px;
-        font-size: 1.5rem;
-    } 
+/* ========== 📱 АДАПТИВНОСТЬ (ДЛЯ ТЕЛЕФОНОВ) ========== */
 
-    /* Группа кнопок: занимает всю ширину */
-    .btn-group{
-        width:100%;
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:8px;
-    }
-    
-    /* Кнопки: растягиваются равномерно */
-    .smile-btn{
-        font-size:13px;
-        padding:8px 12px;
-        flex-grow: 1; /* Равномерное распределение */
-        min-width: 120px; /* Минимальная ширина для двух кнопок в ряд */
-    }
-    
-    /* 2. ГАЛЕРЕЯ: ПЕРЕКЛЮЧАЕМ НА ВЕРТИКАЛЬНОЕ СТАКОВАНИЕ */
-    
-    /* Главный контейнер сетки становится вертикальным */
-    .main-area{
-        grid-template-columns:1fr;
-        gap:20px;
-    }
-    
-    /* Миниатюры: горизонтальный скролл (должны быть над большим фото) */
-    .folder-thumbs{ 
-        order:1; 
-        overflow-x:auto; 
-        flex-wrap:nowrap; 
-        padding-bottom:8px; 
-        justify-content: flex-start;
-    }
-    .thumb{width:100px;height:100px;flex:0 0 auto; border-radius:12px;}
-    
-    /* Большое фото */
-    .folder-big{ order:2; border-radius:12px;}
-    
-    /* Боковая панель (описание + связанные фото) */
-    .right-panel {
-        order: 3;
+@media (max-width: 900px) {
+    .main-area { grid-template-columns: 1fr; }
+    .right-panel { order: 3; }
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        flex-direction: column;
+        padding: 15px;
+        gap: 12px;
     }
 
-    /* Связанные фото: горизонтальный скролл */
-    .folder-related{ 
-        max-height: none; 
-        overflow-x:auto; 
-        overflow-y: hidden;
-        display: flex; 
+    .logo { font-size: 1.2rem; }
+
+    .btn-group {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Кнопки в два ровных ряда */
+        gap: 8px;
+    }
+
+    .smile-btn {
+        padding: 10px 5px;
+        font-size: 12px;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .main { padding: 10px; }
+
+    .hero { padding: 15px; margin-bottom: 15px; }
+    .hero h2 { font-size: 1.4rem; }
+
+    /* Миниатюры над фото для удобства на телефоне */
+    .folder-thumbs {
+        order: 1;
+        overflow-x: auto;
         flex-wrap: nowrap;
         justify-content: flex-start;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch; /* Плавный скролл на iPhone */
     }
-    .thumb-related{
-        width:90px;
-        height:90px;
-        flex: 0 0 auto; 
-        border-radius:10px;
+
+    .thumb { width: 80px; height: 80px; flex: 0 0 auto; }
+
+    .folder-big { order: 2; border-radius: 12px; }
+
+    .folder-related {
+        grid-template-columns: repeat(4, 1fr); /* Больше мелких превью в ряд */
+        overflow-x: auto;
+        display: flex;
     }
     
-    .hero h2 { font-size: 1.8rem; }
+    .thumb-related { width: 70px; height: 70px; flex: 0 0 auto; }
 }
 
-/* --- Стили для футера --- */
-.footer{
-    width: 100%;
+.footer {
     text-align: center;
-    font-size: 17px;
-    font-weight: 500;
+    font-size: 14px;
     color: var(--primary-color);
-    padding: 16px 0;
-    letter-spacing: 1px;
-    opacity: .9;
+    padding: 20px;
+    opacity: 0.8;
 }
